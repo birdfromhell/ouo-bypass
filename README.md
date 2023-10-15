@@ -1,24 +1,45 @@
-# Ouo.io Bypass Application 
+# Ouo.io Bypass Project 
 
-## Overview
-This application is developed in Python using the FastAPI framework. It provides a simple tool to bypass ouo.io based URL's. 
+Ouo.io Bypass is a Python application developed with the FastAPI framework. It provides a tool for bypassing ouo.io URLs. 
 
 ## System Requirements
-- Python 3.11.5
-- FastAPI
-- Pydantic
-- bypass (note: this package is not listed among the installed packages in the system message. Please ensure this package is installed)
+* Python 3.11.5
+* FastAPI
+* Pydantic
 
-## How to run the app
+## How to Run the Application
 
-1. Install all necessary packages listed in the system requirements.
-2. Run your FastAPI application using command: `uvicorn main:app --reload`
-3. Open `http://127.0.0.1:8000/` in your browser to access the root endpoint.
-4. POST requests can be sent to `http://127.0.0.1:8000/bypass/` with a JSON body containing an "url" key with a string value representing the ouo.io url you want to bypass.
+1. Install all necessary packages as mentioned in the system requirements.
 
-## API Reference
+2. Use the following command to run your FastAPI application:
 
-### Root Endpoint (`GET /`)
-Returns a welcoming message indicating the service is running.
+   ```bash
+   uvicorn main:app --reload
+   ```
+3. Navigate to `http://127.0.0.1:8000/` in your browser to access the application. 
 
-**Sample response:**
+## API Endpoints
+
+1. `GET /`: Access this root endpoint to get a welcome message indicating the service is running.
+
+   The expected response would be:
+
+    ```json
+    { "message": "This is ouo.io Bypass" }
+    ```
+
+2. `POST /bypass/`: Make a POST request to this endpoint to bypass the ouo.io URL. 
+
+   The body of the request should be as follows:
+
+    ```json
+    {
+      "url": "<insert ouo.io url here>"
+    }
+    ```
+
+The response will depend on the `ouo_bypass` function.
+
+## Feedback and Issue Reporting
+
+Feel free to open an issue in this repository if you have any questions, feedback, or issues regarding this project.
