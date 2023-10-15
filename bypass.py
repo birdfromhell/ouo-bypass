@@ -3,7 +3,6 @@ from bs4 import BeautifulSoup
 from urllib.parse import urlparse
 from curl_cffi import requests
 
-
 def get_recaptcha_v3():
     ANCHOR_URL = 'https://www.google.com/recaptcha/api2/anchor?ar=1&k=6Lcr1ncUAAAAAH3cghg6cOTPGARa8adOf-y9zv2x&co=aHR0cHM6Ly9vdW8ucHJlc3M6NDQz&hl=en&v=pCoGBhjs9s8EhFOHJFe8cqis&size=invisible&cb=ahgyd1gkfkhe'
     url_base = 'https://www.google.com/recaptcha/'
@@ -11,11 +10,11 @@ def get_recaptcha_v3():
     client.headers.update({'content-type': 'application/x-www-form-urlencoded'})
     matches = re.findall('([api2|enterprise]+)\/anchor\?(.*)', ANCHOR_URL)[0]
     url_base += matches[0] + '/'
-    params = {pair.split('='): pair for pair in matches[1].split('&')}
+    params = {key: value for key, value in (pair.split('=') for pair in matches[1].split('&'))} # fixed line
     res = client.get(url_base + 'anchor', params=params)
     token = re.findall(r'"recaptcha-token" value="(.*?)"', res.text)[0]
     post_data = post_data.format(params["v"], token, params["k"], params["co"])
-    res = client.post(url_base + 'reload', params=f'k={params["k"]}', data=post_data)
+    res = client.post(url_base + 'reload', params={'k': params["k"]}, data=post_data)
     answer = re.findall(r'"rresp","(.*?)"', res.text)[0]
     return answer
 
@@ -48,8 +47,6 @@ def ouo_bypass(url):
     }
 
 
-url = "https://ouo.press/Zu7Vs5"
-
 client = requests.Session()
 client.headers.update({
     'authority': 'ouo.io',
@@ -59,6 +56,3 @@ client.headers.update({
     'referer': 'http://www.google.com/ig/adde?moduleurl=',
     'upgrade-insecure-requests': '1',
 })
-
-# out = ouo_bypass(url)
-# print(out)
